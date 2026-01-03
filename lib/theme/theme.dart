@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class BloomFreelyTheme {
-  static const Color _primarySeedColor = Colors.blue;
+  static const MaterialColor _primarySeedColor = Colors.blue;
 
   static final TextTheme _appTextTheme = TextTheme(
     displayLarge: GoogleFonts.oswald(fontSize: 57, fontWeight: FontWeight.bold),
