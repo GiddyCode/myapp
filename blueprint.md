@@ -1,56 +1,61 @@
-# Guardian Angel Blueprint
+
+# Application Blueprint
 
 ## Overview
 
-Guardian Angel is a personal safety application designed to provide users with a sense of security and immediate access to help in emergency situations. It also fosters a supportive community where users can connect with others who have gone through similar experiences.
+This document outlines the architecture, features, and design of the Flutter application. The app is designed as a personal safety application with features for emergency alerts, community support, and trusted contacts.
 
-## Features
+## Architecture
 
-### Core Safety Features
+The application is being refactored to follow a clean architecture pattern using `flutter_riverpod` for state management and dependency injection.
 
-*   **SOS Activation:** A prominent SOS button to quickly trigger an emergency alert.
-*   **Countdown Timer:** A 5-second countdown before the SOS is officially sent, allowing for cancellation.
-*   **Live Location Sharing:** Automatically shares the user's live location with trusted contacts during an active SOS.
-*   **Trusted Contacts:** Users can designate trusted contacts who will be notified in case of an emergency.
-*   **SOS History:** A log of all past SOS alerts.
-*   **Emergency Settings:** Customizable settings for the SOS feature, such as a silent mode and a personalized SOS message.
+*   **Presentation Layer:** Contains the UI (widgets and screens) and the state management logic (Riverpod providers).
+    *   **Screens:** Individual pages of the application.
+    *   **Widgets:** Reusable UI components.
+    *   **Providers:** Riverpod providers for managing UI state and theme.
+*   **Domain Layer:** (To be developed) Will contain business logic, entities, and repository interfaces.
+*   **Data Layer:** (To be developed) Will contain repository implementations and data sources (e.g., Firebase, local storage).
 
-### Community Hub
+## Current Features & Design
 
-*   **Community Feed:** A social feed where users can share their stories, offer support, and connect with others.
-*   **Support Groups:** Themed support groups that users can join to discuss specific topics in a safe and private environment.
+*   **Onboarding:** A multi-page onboarding flow to introduce users to the app.
+*   **Authentication:** Phone number based OTP verification.
+*   **Home Screen:** A central dashboard providing access to core features:
+    *   SOS Activation
+    *   Community Feed
+    *   Safety Status
+    *   Trusted Contacts
+*   **Theming:**
+    *   Uses Material 3 with `ColorScheme.fromSeed`.
+    *   Custom fonts via `google_fonts`.
+    *   Support for Light/Dark mode toggling.
+    *   Centralized theme data in `lib/theme/app_theme.dart`.
+*   **Navigation:**
+    *   Uses `go_router` for declarative routing.
+    *   Routes are defined in `lib/router.dart`.
 
-### User Profile & Onboarding
+## Current Task: Refactor to Riverpod and Link Screens
 
-*   **Phone Number Authentication:** Secure onboarding using phone number verification.
-*   **User Profile:** A personal profile where users can manage their information.
-*   **Onboarding Flow:** A simple and intuitive onboarding process to guide new users through the app's features.
+### Plan
 
-## UI/UX Polish
-
-The application will feature a modern and intuitive design with a focus on user experience. The color scheme will be based on a palette of purples and pinks, creating a sense of safety and trust.
-
-### Onboarding Screen
-
-The onboarding process will consist of a series of screens that highlight the key features of the app. Each screen will feature a large image, a title, a brief description, and a list of key features. The final screen will have a "Get Started" button to navigate to the main app.
-
-### Home Screen
-
-The home screen will provide quick access to all the core features of the app. It will feature a large, prominent SOS button at the top, followed by a grid of feature cards. The bottom of the screen will have a navigation bar for easy access to other sections of the app.
-
-## Current Implementation Plan
-
-This is the initial implementation of the Guardian Angel app. All the basic screens and navigation have been set up. The next steps will focus on implementing the core functionalities and connecting the app to a backend service.
-
-### Next Steps:
-
-1.  **Firebase Integration:** Set up Firebase for user authentication, database, and storage.
-2.  **Implement User Authentication:** Connect the phone number authentication flow to Firebase Authentication.
-3.  **Implement Database:** Use Firestore to store user data, community posts, support groups, and SOS history.
-4.  **Implement Storage:** Use Firebase Storage to store user profile pictures.
-5.  **Implement Core Functionalities:**
-    *   SOS activation logic.
-    *   Live location sharing using a location service.
-    *   Adding and managing trusted contacts.
-    *   Creating and viewing community posts.
-    *   Joining and participating in support groups.
+1.  **Add Riverpod Dependencies:** Add `flutter_riverpod`, `riverpod_annotation`, `build_runner`, and `riverpod_generator`.
+2.  **Create Blueprint:** Create this `blueprint.md` file to document the project.
+3.  **Refactor Theme Provider:**
+    *   Convert the `ThemeProvider` from a `ChangeNotifier` to a Riverpod `NotifierProvider` using `riverpod_generator`.
+    *   Create `lib/providers/theme_provider.dart`.
+4.  **Update `main.dart`:**
+    *   Remove the `ChangeNotifierProvider`.
+    *   Wrap the root widget `MyApp` in a `ProviderScope`.
+    *   Update `MyApp` to consume the new theme provider from Riverpod.
+5.  **Link Home Screen Widgets:**
+    *   Convert `HomeScreen` to a `ConsumerWidget`.
+    *   Add `onPressed` or `onTap` handlers to the cards and buttons on the home screen.
+    *   Use `context.go()` from `go_router` to navigate to the corresponding screens:
+        *   "Activate SOS" button -> `/sos_activation`
+        *   "SOS" card -> `/sos_history`
+        *   "Community" card -> `/community_feed`
+        *   "Safety Status" card -> `/safety_status`
+        *   "Trusted Contacts" card -> `/trusted_contacts`
+6.  **Code Generation:** Run `dart run build_runner build --delete-conflicting-outputs` to generate the necessary provider code.
+7.  **Format Code:** Run `dart format .` to ensure code consistency.
+8.  **Verification:** Check for analysis errors and ensure the UI navigation works as intended.

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -21,7 +20,10 @@ class BloomFreelyTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: _primarySeedColor,
       foregroundColor: Colors.white,
-      titleTextStyle: GoogleFonts.oswald(fontSize: 24, fontWeight: FontWeight.bold),
+      titleTextStyle: GoogleFonts.oswald(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
@@ -29,7 +31,10 @@ class BloomFreelyTheme {
         backgroundColor: _primarySeedColor,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        textStyle: GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.w500),
+        textStyle: GoogleFonts.roboto(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     ),
   );
@@ -44,15 +49,21 @@ class BloomFreelyTheme {
     appBarTheme: AppBarTheme(
       backgroundColor: Colors.grey[900],
       foregroundColor: Colors.white,
-      titleTextStyle: GoogleFonts.oswald(fontSize: 24, fontWeight: FontWeight.bold),
+      titleTextStyle: GoogleFonts.oswald(
+        fontSize: 24,
+        fontWeight: FontWeight.bold,
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(
         foregroundColor: Colors.black,
-        backgroundColor: _primarySeedColor.shade200,
+        backgroundColor: _primarySeedColor.withAlpha(200),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-        textStyle: GoogleFonts.roboto(fontSize: 16, fontWeight: FontWeight.w500),
+        textStyle: GoogleFonts.roboto(
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
       ),
     ),
   );

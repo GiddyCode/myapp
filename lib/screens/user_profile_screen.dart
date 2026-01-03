@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
@@ -12,10 +11,7 @@ class UserProfileScreen extends StatelessWidget {
       body: ListView(
         children: [
           const SizedBox(height: 20),
-          const CircleAvatar(
-            radius: 50,
-            child: Icon(Icons.person, size: 50),
-          ),
+          const CircleAvatar(radius: 50, child: Icon(Icons.person, size: 50)),
           const SizedBox(height: 10),
           const Text(
             'John Doe',

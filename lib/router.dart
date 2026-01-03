@@ -1,4 +1,3 @@
-
 import 'package:go_router/go_router.dart';
 import 'package:myapp/screens/about_legal_screen.dart';
 import 'package:myapp/screens/active_sos_screen.dart';
@@ -10,7 +9,7 @@ import 'package:myapp/screens/emergency_contacts_screen.dart';
 import 'package:myapp/screens/emergency_settings_screen.dart';
 import 'package:myapp/screens/group_chat_screen.dart';
 import 'package:myapp/screens/help_faq_screen.dart';
-import 'package:myapp/screens/home_dashboard_screen.dart';
+import 'package:myapp/screens/home_screen.dart';
 import 'package:myapp/screens/notifications_screen.dart';
 import 'package:myapp/screens/onboarding_screen.dart';
 import 'package:myapp/screens/otp_verification_screen.dart';
@@ -28,10 +27,7 @@ import 'package:myapp/screens/welcome_screen.dart';
 
 final router = GoRouter(
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const SplashScreen(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const SplashScreen()),
     GoRoute(
       path: '/welcome',
       builder: (context, state) => const WelcomeScreen(),
@@ -56,10 +52,7 @@ final router = GoRouter(
       path: '/emergency-contacts',
       builder: (context, state) => const EmergencyContactsScreen(),
     ),
-    GoRoute(
-      path: '/home',
-      builder: (context, state) => const HomeDashboardScreen(),
-    ),
+    GoRoute(path: '/home', builder: (context, state) => const HomeScreen()),
     GoRoute(
       path: '/sos',
       builder: (context, state) => const SosActivationScreen(),
@@ -120,10 +113,7 @@ final router = GoRouter(
       path: '/privacy-security',
       builder: (context, state) => const PrivacySecurityScreen(),
     ),
-    GoRoute(
-      path: '/help',
-      builder: (context, state) => const HelpFaqScreen(),
-    ),
+    GoRoute(path: '/help', builder: (context, state) => const HelpFaqScreen()),
     GoRoute(
       path: '/about',
       builder: (context, state) => const AboutLegalScreen(),

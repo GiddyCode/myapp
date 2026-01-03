@@ -1,4 +1,3 @@
-
 import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
@@ -50,11 +49,16 @@ class _SosActivationScreenState extends State<SosActivationScreen> {
           children: [
             Text(
               'SOS in',
-              style: Theme.of(context).textTheme.headlineMedium?.copyWith(color: Colors.white),
+              style: Theme.of(
+                context,
+              ).textTheme.headlineMedium?.copyWith(color: Colors.white),
             ),
             Text(
               '$_countdown',
-              style: Theme.of(context).textTheme.displayLarge?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+              style: Theme.of(context).textTheme.displayLarge?.copyWith(
+                color: Colors.white,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             const SizedBox(height: 50),
             ElevatedButton(

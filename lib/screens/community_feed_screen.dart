@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 class CommunityFeedScreen extends StatelessWidget {
@@ -25,14 +24,22 @@ class CommunityFeedScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Text('User ${index + 1}', style: const TextStyle(fontWeight: FontWeight.bold)),
-                          const Text('2 hours ago', style: TextStyle(color: Colors.grey, fontSize: 12)),
+                          Text(
+                            'User ${index + 1}',
+                            style: const TextStyle(fontWeight: FontWeight.bold),
+                          ),
+                          const Text(
+                            '2 hours ago',
+                            style: TextStyle(color: Colors.grey, fontSize: 12),
+                          ),
                         ],
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
-                  const Text('This is a sample post in the community feed. Users can share their experiences and support each other here.'),
+                  const Text(
+                    'This is a sample post in the community feed. Users can share their experiences and support each other here.',
+                  ),
                   const SizedBox(height: 10),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,

@@ -1,215 +1,153 @@
 import 'package:flutter/material.dart';
-import 'package:myapp/screens/home_dashboard_screen.dart';
+import 'package:go_router/go_router.dart';
+import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
 
   @override
-  State<OnboardingScreen> createState() => _OnboardingScreenState();
+  _OnboardingScreenState createState() => _OnboardingScreenState();
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _pageController = PageController();
   int _currentPage = 0;
 
-  final List<OnboardingPageData> _pages = [
-    OnboardingPageData(
-      title: 'BLOOM FREELY, ANYTIME, ANYWHERE.',
-      description: 'Your journey, your safety, your power. Designed for South African women and children.',
-      image: 'assets/images/onboarding1.png',
-      features: [
-        'Instant Emergency Response',
-        'Vetted Safety Professionals',
-        '24/7 Support Network',
-      ],
-    ),
-    OnboardingPageData(
-      title: 'Your Safety, Your Power!',
-      description: 'Move with confidence, knowing help is always within reach.',
-      image: 'assets/images/onboarding2.png',
-      features: [
-        'Real-time Location Sharing',
-        'Community Safety Ratings',
-        'Smart Risk Assessment',
-      ],
-    ),
-    OnboardingPageData(
-      title: 'Protecting Our Children',
-      description: 'Every child deserves to feel safe and protected wherever they go.',
-      image: 'assets/images/onboarding3.png',
-      features: [
-        'Child Safety Tracking',
-        'Parent Alerts',
-        'Family Protection Network',
-      ],
-    ),
-        OnboardingPageData(
-      title: 'United in Safety',
-      description: 'A rainbow nation standing together to protect every woman and child.',
-      image: 'assets/images/onboarding4.png',
-      features: [
-        'Community Support',
-        'Diverse Safety Network',
-        'Cultural Understanding',
-      ],
-    ),
-    OnboardingPageData(
-      title: 'Empowered & Protected',
-      description: 'Navigate your day with confidence, knowing you\'re never alone.',
-      image: 'assets/images/onboarding5.png',
-      features: [
-        '24/7 Support',
-        'Professional Protection',
-        'Peace of Mind',
-      ],
-    ),
+  final List<Map<String, String>> _onboardingData = [
+    {
+      "image": "assets/images/onboarding1.png",
+      "title": "Welcome to Guardian Angel",
+      "description": "Your safety companion in times of need. Connect with trusted contacts and alert them instantly.",
+    },
+    {
+      "image": "assets/images/onboarding2.png",
+      "title": "Instant SOS Alerts",
+      "description": "Activate the SOS button to send your live location and a pre-defined message to your emergency contacts.",
+    },
+    {
+      "image": "assets/images/onboarding3.png",
+      "title": "Community Support",
+      "description": "Join support groups and connect with others who have been through similar experiences.",
+    },
+    {
+      "image": "assets/images/onboarding4.png",
+      "title": "Safety Status Updates",
+      "description": "Let your loved ones know you're safe with a single tap. Mark yourself safe during emergencies.",
+    },
+    {
+      "image": "assets/images/onboarding5.png",
+      "title": "Direct & Group Messaging",
+      "description": "Stay connected with your trusted contacts through secure direct and group messaging.",
+    }
   ];
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+
     return Scaffold(
-      body: Column(
-        children: [
-          Expanded(
-            child: PageView.builder(
-              controller: _pageController,
-              itemCount: _pages.length,
-              onPageChanged: (int page) {
-                setState(() {
-                  _currentPage = page;
-                });
-              },
-              itemBuilder: (context, index) {
-                return OnboardingPage(data: _pages[index]);
-              },
+      backgroundColor: theme.scaffoldBackgroundColor,
+      body: SafeArea(
+        child: Column(
+          children: [
+            Expanded(
+              child: PageView.builder(
+                controller: _pageController,
+                itemCount: _onboardingData.length,
+                onPageChanged: (int page) {
+                  setState(() {
+                    _currentPage = page;
+                  });
+                },
+                itemBuilder: (context, index) {
+                  return OnboardingPage(
+                    data: _onboardingData[index],
+                  );
+                },
+              ),
             ),
-          ),
-          _buildNavigation(),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildNavigation() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(_pages.length, (index) => _buildDot(index: index)),
-          ),
-          const SizedBox(height: 20),
-          if (_currentPage == _pages.length - 1)
-            ElevatedButton(
-              onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomeDashboardScreen()),
-                );
-              },
-              child: const Text('Get Started'),
-            )
-          else
-            ElevatedButton(
-              onPressed: () {
-                _pageController.nextPage(
-                  duration: const Duration(milliseconds: 300),
-                  curve: Curves.ease,
-                );
-              },
-              child: const Text('Next'),
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+              child: Column(
+                children: [
+                  SmoothPageIndicator(
+                    controller: _pageController,
+                    count: _onboardingData.length,
+                    effect: ExpandingDotsEffect(
+                      activeDotColor: theme.colorScheme.secondary,
+                      dotColor: theme.colorScheme.secondary.withOpacity(0.3),
+                      dotHeight: 10,
+                      dotWidth: 10,
+                      spacing: 8,
+                    ),
+                  ),
+                  const SizedBox(height: 40),
+                  ElevatedButton(
+                    onPressed: () {
+                      if (_currentPage == _onboardingData.length - 1) {
+                        // Use go_router for navigation
+                        context.go('/welcome');
+                      } else {
+                        _pageController.nextPage(
+                          duration: const Duration(milliseconds: 300),
+                          curve: Curves.ease,
+                        );
+                      }
+                    },
+                    style: ElevatedButton.styleFrom(
+                      minimumSize: const Size(double.infinity, 50),
+                    ),
+                    child: Text(
+                      _currentPage == _onboardingData.length - 1 ? 'Get Started' : 'Next',
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          const SizedBox(height: 10),
-          TextButton(
-            onPressed: () {
-                Navigator.pushReplacement(
-                  context,
-                  MaterialPageRoute(builder: (context) => const HomeDashboardScreen()),
-                );
-            },
-            child: const Text('Skip', style: TextStyle(color: Colors.white70)),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
-
-  Widget _buildDot({required int index}) {
-    return AnimatedContainer(
-      duration: const Duration(milliseconds: 300),
-      height: 8,
-      width: _currentPage == index ? 24 : 8,
-      margin: const EdgeInsets.symmetric(horizontal: 5),
-      decoration: BoxDecoration(
-        color: _currentPage == index ? Theme.of(context).colorScheme.secondary : Colors.white24,
-        borderRadius: BorderRadius.circular(5),
-      ),
-    );
-  }
-}
-
-class OnboardingPageData {
-  final String title;
-  final String description;
-  final String image;
-  final List<String> features;
-
-  OnboardingPageData({
-    required this.title,
-    required this.description,
-    required this.image,
-    required this.features,
-  });
 }
 
 class OnboardingPage extends StatelessWidget {
-  final OnboardingPageData data;
+  final Map<String, String> data;
 
-  const OnboardingPage({super.key, required this.data});
+  const OnboardingPage({
+    super.key,
+    required this.data,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
     return Padding(
-      padding: const EdgeInsets.all(40.0),
+      padding: const EdgeInsets.all(20.0),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Image.asset(
+            data["image"]!,
+            height: 300,
+            // Add a placeholder for faulty images
+            errorBuilder: (context, error, stackTrace) {
+              return const Icon(Icons.broken_image, size: 300, color: Colors.grey);
+            },
+          ),
+          const SizedBox(height: 40),
           Text(
-            data.title,
+            data["title"]!,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.headlineMedium,
+            style: theme.textTheme.headlineLarge,
           ),
           const SizedBox(height: 20),
           Text(
-            data.description,
+            data["description"]!,
             textAlign: TextAlign.center,
-            style: Theme.of(context).textTheme.bodyMedium,
+            style: theme.textTheme.bodyMedium,
           ),
-          const SizedBox(height: 40),
-          Image.asset(
-            data.image,
-            height: 300,
-          ),
-          const SizedBox(height: 40),
-          ...data.features.map((feature) => _buildFeature(context, feature)),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildFeature(BuildContext context, String text) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8.0),
-      child: Row(
-        children: [
-          Icon(
-            Icons.check_circle,
-            color: Theme.of(context).colorScheme.secondary,
-            size: 20,
-          ),
-          const SizedBox(width: 10),
-          Text(text, style: Theme.of(context).textTheme.bodyLarge),
         ],
       ),
     );
